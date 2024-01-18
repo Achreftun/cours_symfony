@@ -1,0 +1,196 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!
+{% endblock %}
+
+{% block body %}
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
+
+	<div class="example-wrapper">
+
+		<h1>Interpolation d'atribut simple :
+			{{ controller_name }}! ✅</h1>
+		<h2>Interpolation d'un tableau</h2>
+		<ul>
+			<li>{{ numbers[0] }}</li>
+			<li>{{ numbers['1'] }}</li>
+			<li>{{ numbers["2"] }}</li>
+		</ul>
+		<h2>Interpolation d'un objet</h2>
+		<ul>
+			<li>{{ alien.id }}</li>
+			<li>{{ alien.name() }}</li>
+			<li>{{ alien.getColor() }}</li>
+		</ul>
+		<h2>Concaténation</h2>
+		<p>{{ alien.name ~ " " ~ alien.color }}</p>
+		<h2>Débogage</h2>
+		app.environment =
+		{{ app.environment }}<br>
+		app.debug
+		{{ app.debug }}
+		{% if app.debug == false %}
+			<p>
+				{{ dump(alien) }}</p>
+		{% endif %}
+		<h1>Déclaration et utilisation de variables</h1>
+		{% set texte = "bonjour"  %}
+		<p>{{ texte }}</p>
+		{% set texte = "bonsoir"  %}
+		<p>{{ texte }}</p>
+		<h1>Opérations sur les variables</h1>
+		<p>{{ numbers[0]  + numbers[1]  }}</p>
+		<p>{{ numbers[0] > 0  and numbers[1] > 0 }}</p>
+		<p>{{ 2 in numbers }}</p>
+		<p>{{ 22 in numbers }}</p>
+		{{ alien.name starts with 'D' }}
+		<h1>Structures conditionnelles</h1>
+		{% if numbers[0] > 0  %}
+			{{ numbers[0] }}
+			est positif
+		{% endif %}
+		{% if numbers[0] > 0  %}
+			{{ numbers[0] }}
+			est positif
+		{%  else %}
+			{{ numbers[0] }}
+			est  négatif
+		{% endif %}
+		<h1>Structures itératives</h1>
+		{% for item in numbers %}
+			<p>
+				{% if item % 2 == 0  %}
+					{{ item }}
+					est pair
+				{%  else %}
+					{{ item }}
+					est  impair
+				{% endif %}
+			</p>
+		{% endfor %}
+		{% for item in numbers %}
+			<p>
+				{% if item is even  %}
+					{{ item }}
+					est pair
+				{%  else %}
+					{{ item }}
+					est  impair
+				{% endif %}
+			</p>
+		{% endfor %}
+		{% for item in numbers %}
+			<p>
+				{% if item is divisible by 2  %}
+					{{ item }}
+					est pair
+				{%  else %}
+					{{ item }}
+					est  impair
+				{% endif %}
+			</p>
+		{% endfor %}
+
+		{% for i in 0..10 %}
+			<p>
+				{{ i }}
+			</p>
+		{% endfor %}
+		{% for i in range(0, 10, 2) %}
+			<p>
+				{{ i }}
+			</p>
+		{% endfor %}
+		{% for i in 'a'..'j' %}
+			<p>
+				{{ i }}
+			</p>
+		{% endfor %}
+		{% for key, value in numbers %}
+			<p>
+				{{ key }}
+				:
+				{{ value }}
+			</p>
+		{% endfor %}
+		{% for key, value in numbers %}
+			<p>
+				{% if key is even %}
+					{{ value }}
+				{% endif %}
+			</p>
+		{% endfor %}
+		<h1>Les filtres
+		</h1>
+		<h2>string</h2>
+		<p>{{ controller_name | upper }}</p>
+		<p>{{ controller_name | capitalize }}</p>
+		<p>{{ controller_name | title }}</p>
+		<p>{{ controller_name | length }}</p>
+		<p>{{ controller_name | upper | length}}</p>
+		<h2>array</h2>
+		{% for  value in numbers | slice(0,3) %}
+			<p>
+				{{ value }}
+			</p>
+		{% endfor %}
+		{% for  value in numbers [0:3] %}
+			<p>
+				{{ value }}
+			</p>
+		{% endfor %}
+		{% for  value in numbers [1:] %}
+			<p>
+				{{ value }}
+			</p>
+		{% endfor %}
+		{% for  value in numbers | map(elt => elt + 10) %}
+			<p>
+				{{ value }}
+			</p>
+		{% endfor %}
+		{% for  value in numbers | filter(elt => elt % 2 == 0) %}
+			<p>
+				{{ value }}
+			</p>
+		{% endfor %}
+		{% for  value in numbers | map(elt => elt + 5) | filter(elt => elt % 2 == 0) %}
+			<p>
+				{{ value }}
+			</p>
+		{% endfor %}
+		<p>{{ numbers | reduce((prev, curr) => prev + curr) }}</p>
+		<p>{{ numbers | filter(elt => elt is even ) | length }}</p>
+		<p>{{ numbers | reduce((prev, curr) => curr % 2 == 0 ? prev + 1 : prev) }}</p>
+		{% for  value in numbers | sort %}
+			<p>
+				{{ value }}
+			</p>
+		{% endfor %}
+		{% for  value in numbers | reverse %}
+			<p>
+				{{ value }}
+			</p>
+		{% endfor %}
+		<p>{{ numbers | sort | last }}</p>
+		<p>{{ numbers | sort | reverse | first }}</p>
+		<h1>Liens hypertextes</h1>
+		<p>
+			<a href="{{ path('app_vehicule') }}">véhicule</a>
+		</p>
+		<p>
+			<a href="{{ url('app_vehicule') }}">véhicule</a>
+		</p>
+	</div>
+{% endblock %}
